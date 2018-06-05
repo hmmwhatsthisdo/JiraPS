@@ -1,18 +1,3 @@
-<#
-.SYNOPSIS
-    Updates the body, visibility, or privacy settings on a Jira comment.
-.DESCRIPTION
-    This cmdlet updates one or more properties (including body, visibility/privacy, and other settings) on a Jira comment.
-.EXAMPLE
-    PS C:\> <example usage>
-    Explanation of what the example does
-.INPUTS
-    Inputs (if any)
-.OUTPUTS
-    Output (if any)
-.NOTES
-    General notes
-#>
 function Set-JiraIssueComment {
     [CmdletBinding(
         SupportsShouldProcess,
@@ -21,7 +6,6 @@ function Set-JiraIssueComment {
     )]
     param (
 
-        # The comment to be updated. In general, this should be pipelined from Get-JiraIssueComment.
         [Parameter(
             Mandatory,
             ValueFromPipeline
@@ -30,7 +14,6 @@ function Set-JiraIssueComment {
         [PSTypeName("JiraPS.Comment")]
         $Comment,
 
-        # The comment's body.
         [Parameter(
             ValueFromPipelineByPropertyName
         )]
@@ -38,12 +21,10 @@ function Set-JiraIssueComment {
         [String]
         $Body,
 
-        # Whether the comment should be internal. Once set as internal, comments cannot be re-set as publicly visible. Use caution when working with this parameter.
         [Parameter()]
         [switch]
         $Internal,
 
-        # The name of the role to restrict visibility to. Users outside of this role will not see the comment.
         [Parameter(
             Mandatory,
             ParameterSetName = "RoleVisibility"
@@ -52,7 +33,6 @@ function Set-JiraIssueComment {
         [string]
         $RestrictToRole,
 
-        # The name of the group to restrict visibility to. Users outside of this group will not see the comment.
         [Parameter(
             Mandatory,
             ParameterSetName = "GroupVisibility"
@@ -61,20 +41,17 @@ function Set-JiraIssueComment {
         [string]
         $RestrictToGroup,
 
-        # Additional properties to be added to the comment, if applicable.
         [Parameter()]
         [ValidateNotNull()]
         [Alias("Properties")]
         [hashtable]
         $AdditionalProperties = @{},
 
-        # Explicit credentials to be used for this request, if required.
         [Parameter()]
         [System.Management.Automation.CredentialAttribute()]
         [pscredential]
         $Credential,
 
-        # Specifies whether the cmdlet should return the object from the Jira API.
         [Parameter()]
         [switch]
         $PassThru
