@@ -96,11 +96,13 @@ function Set-JiraIssueComment {
             body = $Body
         }
         If ($PSCmdlet.ParameterSetName -eq "RoleVisibility") {
+            Write-Verbose "Restricting comment visibility to role `"$RestrictToRole`"."
             $CommentUpdateHT.visibility = @{
                 type = "role"
                 value = $RestrictToRole
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "GroupVisibility") {
+            Write-Verbose "Restricting comment visibility to group `"$RestrictToGroup`"."
             $CommentUpdateHT.visibility = @{
                 type = "group"
                 value = $RestrictToGroup
